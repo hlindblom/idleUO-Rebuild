@@ -1,0 +1,473 @@
+@font-face {
+  font-family: 'uo-font';
+  src: url("/font/alagard.ttf");
+}
+
+* {
+  cursor: url('/images/cursors/UO-Gauntlet.png'), auto;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  
+}
+body {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 2rem 1fr 1.25rem;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  
+}
+
+header {
+  grid: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 0.75rem;
+}
+
+footer {
+  grid: 3;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Stone texture for Header and Footer*/
+.stone {
+  background-color: black;
+  background-image: url("../images/textures/stone-texture.png");
+  background-size: contain;
+  background-repeat: repeat;
+  background-position: center;
+  border: 2px outset rgba(242, 240, 235, 0.5);
+  box-shadow: 0px 2px 5px #191919;
+  font-family: Tahoma , Arial, sans-serif;
+  color: #D4D5D5;
+  z-index: 10;
+  position: relative;
+  font-size: 0.75rem;
+}
+
+.bw-text {
+  color: #191919;
+  text-shadow: 0.05rem 0.05rem 0.05rem #D4D5D5;
+}
+
+.wb-text {
+  color: #D4D5D5;
+  text-shadow: 2px 2px 2px #191919 ;
+}
+
+/*light grey color for anchor tags*/
+footer a, header a {
+  color: #D4D5D5;
+}
+
+a:hover{
+  cursor: url('/images/cursors/UO-Help.png'), pointer;
+}
+
+
+main {
+  grid: 2;
+  display: grid;
+  grid-template-columns: 1.35fr 1.25rem 2.5fr 1.25rem 1fr;
+  font-family: 'uo-font', Georgia, serif;
+  background-color: grey;
+}
+
+.column {
+  background-image: url("../images/textures/stone-texture.png");
+  background-size: cover;
+}
+
+/* ****************
+   *  LEFT COLUMN *
+   **************** */
+#column-left {
+  grid-column: 1;
+  background-image: url("../images/backgrounds/background-left.png");
+  background-size: cover;
+  background-position: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+#character-panel {
+  position: absolute;
+}
+
+#player-hair {
+  z-index: 2;
+}
+#player-clothes {
+  z-index: 1;
+}
+#player-weapon {
+  z-index: 1;
+}
+.player {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.4rem;
+}
+
+#player-name {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 2.25rem;
+  font-size: 1.75rem;
+}
+
+#player-name:hover {
+  cursor: url('/images/cursors/UO-text.png'), text;
+}
+
+#weapon-icon {
+  position: absolute;
+  border-radius: 1rem;
+  border: 0.5rem outset black;
+  top: 6rem;
+  right: 3rem;
+  height: 8rem;
+}
+#weapon-icon:hover {
+  filter: brightness(1.25);
+  cursor: url('/images/cursors/UO-Attack-Mode.png'),crosshair;
+  box-shadow: 0.1rem 0.1rem 0.5rem #a51c319d;
+}
+#weapon-icon:active{
+  filter: brightness(0.5);
+  box-shadow: 0.1rem 0.1rem 0.5rem black;
+  border: 0.5rem inset black;
+}
+
+
+#player-info {
+  z-index: 10;
+  position: absolute;
+  font-size: 1.35rem;
+  top: 25rem;
+}
+
+#health-mana {
+  position: absolute;
+  top: 3rem;
+  left: 4rem;
+}
+
+.status-bar {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
+  /* gap: 0.25rem; */
+  align-items: center;
+  /* width: 9rem; */
+  height: 2rem;
+}
+.status-bar p {
+  grid: 1;
+}
+
+#health-bar {
+  grid: 2;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  width: 10rem;
+}
+
+#health-base {
+  position: absolute;
+  top: 0.66rem;
+  left: 1.8rem;
+}
+
+#mana-bar {
+  grid: 2;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  width: 8rem;
+}
+#mana-base {
+  position: absolute;
+  bottom: 0.5;
+  left: 1.8rem;
+}
+
+#xp-xps {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 16.5rem;
+}
+
+#level-xp {
+  position: absolute;
+  bottom: 6.2rem;
+  left: 4rem;
+}
+
+
+#modal {
+  display: none;
+  background-color: #191919a2;
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-top: 10rem;
+  text-align: center; 
+}
+
+input{
+  border: 4px outset #218807b7;
+  border-radius: 1rem;
+  padding-left: 0.5rem;
+  background-image: url("../images/textures/modal-text-input-texture.png");
+  box-shadow: 1px 2px 5px rgba(245, 245, 245, 0.377);
+  height: 2.5rem;
+  width: 65%;
+  margin-bottom: 1rem;
+  font-family: 'uo-font', Georgia, serif;
+  font-size: 1.5rem;
+}
+
+#modal img{
+  margin: 0 0.5rem;
+  height: 1.5rem;
+}
+
+#cancel:hover {
+  filter: brightness(1.25);
+  cursor: url("../images/cursors/cursor_open.gif"), pointer;
+}
+
+#okay:hover {
+  filter: brightness(1.25);
+  cursor: url("../images/cursors/cursor_open.gif"), pointer;
+}
+
+#cancel:active {
+  content: url("../images/buttons/cancel-click.png");
+  cursor: url("../images/cursors/cursor_fist.gif"), auto;
+}
+#okay:active {
+  content: url("../images/buttons/okay-click.png");
+  cursor: url("../images/cursors/cursor_fist.gif"), auto;
+}
+
+
+/* LEFT DIVIDER */
+#column-left {
+  height: 100vh;
+}
+
+#left-divider {
+  grid-column: 2;
+}
+
+/* *****************
+   * MIDDLE COLUMN *
+   ***************** */
+
+
+/* TOP MENU PANEL*/
+#column-middle {
+  height: 100vh;
+}
+
+#middleTop {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  background-image: url("../images/backgrounds/panel-notification-mod-2.png");
+  background-position: center;
+  background-size: contain;
+}
+
+#panel-left {
+  grid: 1;
+}
+#panel-middle {
+  background-color: #1919196b;
+  padding: 0.25rem 0;
+  grid: 2;
+  align-self: center;
+  text-align: center;
+  font-size: 2rem;
+}
+#panel-right {
+  grid: 3;
+}
+
+#menu-divider {
+  grid: 2;
+}
+
+.panel-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.menu-button {
+  position: absolute;
+  width: 7rem;
+}
+
+.menu-button:hover {
+  filter: brightness(1.25);
+  cursor: url('../images/cursors/cursor_open.gif'), pointer;
+}
+#options:active {
+  content: url("../images/buttons/options-click.png");
+  filter: brightness(0.9);
+}
+
+#journal:active {
+  content: url("../images/buttons/journal-click.png");
+  filter: brightness(0.9);
+}
+
+#battle-section {
+  height: 89%;
+  overflow: scroll;
+  background-image: url('../images/backgrounds/menu-background.png');
+  background-size: cover;
+  background-position: top;
+}
+
+.row-divider {
+  position: relative;
+  background-image: url("../images/textures/dividers/divider-row.png");
+  background-size: contain;
+  background-repeat: repeat-x;
+  box-shadow: 0 -1px .4em #191919, 0 1px 0.4em #191919;
+}
+
+.battle-scene{
+  position: relative;
+  height: 9.5rem;
+}
+#training-scene{
+  background-image: url('../images/enemies/rooms/dummy-scene.png');
+  background-size: cover;
+}
+
+.scene-divider {
+  position: relative;
+  height: 1rem;
+  background-image: url('../images/textures/scene-divider.png');
+  background-size: contain;
+  background-repeat: repeat-x;
+}
+.player-scene {
+  position: absolute;
+  left: 5rem;
+  top: 3rem;
+}
+.control {
+  top: 1rem;
+  left: 5rem;
+}
+
+.enemy-scene {
+  position: absolute;
+  left: 8.5rem;
+  top: 1rem;
+}
+.loot {
+  position: absolute;
+}
+.loot:hover {
+  cursor: url('/images/cursors/UO-precision.png') ,pointer;
+}
+/* RIGHT DIVIDER */
+#right-divider {
+  grid-column: 4;
+}
+
+/* ****************
+   * RIGHT COLUMN *
+   **************** */
+
+#column-right {
+  height: 100vh;
+  grid-column: 5;
+  padding-top: 6rem;
+  background-image: url("../images/backgrounds/background-store.png");
+  background-position: bottom left;
+  background-size: cover;
+}
+
+
+.column-divider {
+  position: relative;
+  z-index: 2;
+  background-image: url("../images/textures/dividers/divider-col-right.png");
+  background-repeat: repeat-y;
+  background-position: center;
+  box-shadow: -1px 0 .4em #191919, 1px 0px 0.4em #191919;
+}
+#enemies_container {
+  height: 100%;
+  overflow: scroll;
+}
+.enemy {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 5rem;
+  background-color: #191919;
+  background-image: url('/images/textures/rock-texture-new.png');
+  background-repeat: repeat;
+  background-size: contain;
+  border: 0.75rem outset rgba(228, 228, 228, 0.5);
+}
+
+.enemy:hover {
+  filter: brightness(1.25);
+  cursor: url('/images/cursors/UO-Attack-Mode.png'), pointer;
+}
+.enemy:active {
+  filter: brightness(0.5);
+  border: 0.75rem inset rgba(228, 228, 228, 0.5);
+}
+
+.enemy-profile{
+  filter: grayscale(70%);
+  margin-top: -0.15rem;
+  margin-left: -0.15rem;
+  border: 0.2rem inset grey;
+  border-radius: 0.5rem;
+  height: 4rem;
+}
+
+.enemy-column {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.enemy-title {
+  font-size: 2rem;
+}
+
+.cost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.qty-counter {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+  color: #19191986;
+}

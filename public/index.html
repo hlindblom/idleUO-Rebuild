@@ -87,6 +87,7 @@
           />
           <p class="bw-text" id="player-name">Balthasar</p>
         </div>
+
         <img
           draggable="false"
           src="images/weapons/clubs/1club.png"
@@ -94,43 +95,55 @@
         />
 
         <div class="bw-text" id="player-info">
-          <div id="health-mana">
-            <div class="status-bar">
-              <p>H:</p>
-              <div id="health-bar">
+          <div id="top-half-player-section">
+            <div id="health-mana">
+              <div class="status-bar">
+                <p>H:</p>
+                <div id="health-bar">
+                  <img
+                    draggable="false"
+                    src="images/character/info/bars/health-bar.png"
+                    alt=""
+                  />
+                </div>
                 <img
                   draggable="false"
-                  src="images/character/info/bars/health-bar.png"
+                  id="health-base"
+                  src="images/character/info/bars/health-bar-base.png"
                   alt=""
                 />
               </div>
-              <img
-                draggable="false"
-                id="health-base"
-                src="images/character/info/bars/health-bar-base.png"
-                alt=""
-              />
+              <div class="status-bar">
+                <p>M:</p>
+                <div id="mana-bar">
+                  <img
+                    draggable="false"
+                    src="images/character/info/bars/mana-bar.png"
+                    alt=""
+                  />
+                </div>
+                <img
+                  draggable="false"
+                  id="mana-base"
+                  src="images/character/info/bars/mana-bar-base.png"
+                  alt=""
+                />
+              </div>
             </div>
-            <div class="status-bar">
-              <p>M:</p>
-              <div id="mana-bar">
-                <img
-                  draggable="false"
-                  src="images/character/info/bars/mana-bar.png"
-                  alt=""
-                />
-              </div>
+            <div id="gold">
               <img
                 draggable="false"
-                id="mana-base"
-                src="images/character/info/bars/mana-bar-base.png"
+                id="gold-icon"
+                src="images/character/gold.png"
                 alt=""
               />
+              <span id="totalGold">0</span>
             </div>
           </div>
+
           <div id="level-xp">
             <div>
-              <p>L: <span id="curr-level">1</span></p>
+              <p>L: <span id="curr-level">0</span></p>
             </div>
             <div id="xp-xps">
               <p>X: <span id="xp_counter">0</span></p>
@@ -229,5 +242,6 @@
     <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript" src="alerts.js"></script>
+    <script type="text/javascript" src="levels.js"></script>
   </body>
 </html>

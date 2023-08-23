@@ -7,9 +7,30 @@ function updateXPView(xp) {
   xpCounter.innerText = xp;
 }
 
+function updateLevelView(data) {
+  if (data.totalXP >= window.levels[data.lvl + 1]) ++data.lvl;
+  const lvlCounter = document.querySelector("#curr-level");
+  lvlCounter.innerText = data.lvl;
+}
+
 function clickWeapon(data) {
   updateXPView(++data.totalXP);
+  updateLevelView(data);
   // renderProducers(data);
+}
+function formatGold(gold) {
+  if (gold < 1e6) return gold.toLocaleString("en-US"); // less than 100,000
+  else if (gold < 1e9)
+    return (gold / 1e6).toFixed(3) + "m"; // less than 1 billion
+  else if (gold < 1e12)
+    return (gold / 1e9).toFixed(3) + "b"; // less than 1 trillion
+  else return (gold / 1e12).toFixed(3) + "t"; // trillion or more
+}
+
+function updateGoldCounter(data) {
+  const currGold = document.querySelector("#totalGold");
+  data.gold++;
+  currGold.innerText = formatGold(data.gold);
 }
 
 /**************
@@ -82,9 +103,9 @@ function canSellProducer(data, producerId) {
   return getProducerById(data, producerId).qty > 0;
 }
 
-function updateCPSView(cps) {
-  const cpsSpan = document.querySelector("#cps");
-  cpsSpan.innerText = cps;
+function updatexpPerSecondView(xpPerSecond) {
+  const xpPerSecondSpan = document.querySelector("#xpPerSecond");
+  xpPerSecondSpan.innerText = xpPerSecond;
 }
 
 function updatePrice(producer) {
@@ -97,7 +118,7 @@ function attemptToBuyProducer(data, producerId) {
     producer.qty++;
     data.coffee -= producer.price;
     producer.price = updatePrice(producer);
-    updateCPSView((data.totalCPS += producer.cps));
+    updateXPView((data.totalXP += producer.xpPerSecond));
     return true;
   } else return false;
 }
@@ -108,7 +129,7 @@ function attemptToSellProducer(data, producerId) {
     producer.qty--;
     data.coffee += Math.floor(producer.price * 0.2);
     producer.price = updatePrice(producer);
-    updateCPSView((data.totalCPS -= producer.cps));
+    updateCPSView((data.totalXP -= producer.xpPerSecond));
     return true;
   } else return false;
 }
@@ -179,49 +200,6 @@ function dropLoot(scene) {
   }
 }
 
-function dragElement(elmnt) {
-  var pos1 = 0,
-    pos2 = 0,
-    pos3 = 0,
-    pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    elmnt.onmousedown = dragMouseDown;
-  }
-
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-    elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
-  }
-
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
 function createEnemyButtons(data) {
   const enemyContainer = document.querySelector("#enemies_container");
   data.enemies.forEach((enemy) => {
@@ -291,10 +269,6 @@ if (typeof process === "undefined") {
   const trainingScene = document.querySelector("#training-scene");
   const leftColumn = document.querySelector("#column-left");
 
-  dragElement(document.getElementById("character-panel"));
-  dragElement(document.getElementById("weapon-icon"));
-  dragElement(document.getElementById("player-info"));
-
   weaponIcon.addEventListener("click", () => {
     clickWeapon(data);
     swingWeapon(playerImg, dummyImg);
@@ -308,7 +282,7 @@ if (typeof process === "undefined") {
   battleSection.addEventListener("click", (event) => {
     if (event.target.attributes.class.value === "loot") {
       event.target.remove();
-      data.gold++;
+      updateGoldCounter(data);
     }
   });
 

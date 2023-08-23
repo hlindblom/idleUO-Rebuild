@@ -98,10 +98,25 @@ main {
   background-position: center;
   align-items: flex-start;
   position: relative;
+  display: flex;
+  /* flex-direction: column;
+  align-items: center;  */
 }
 
 #character-panel {
   position: absolute;
+  left: 10%;
+  top: 5%
+}
+
+#player-info {
+  z-index: 10;
+  position: relative;
+  font-size: 1.35rem;
+  top: 25rem;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid green;
 }
 
 #player-hair {
@@ -150,25 +165,24 @@ main {
 }
 
 
-#player-info {
-  z-index: 10;
-  position: absolute;
-  font-size: 1.35rem;
-  top: 25rem;
-}
 
-#health-mana {
+
+#top-half-player-section{
   position: absolute;
   top: 3rem;
-  left: 4rem;
+  left: 4rem; 
+  display: flex;
+  flex-direction: row;
+  border: 1px solid red;
+}
+#health-mana {
+  border: 1px solid red;
 }
 
 .status-bar {
   display: grid;
   grid-template-columns: 1.75rem 1fr;
-  /* gap: 0.25rem; */
   align-items: center;
-  /* width: 9rem; */
   height: 2rem;
 }
 .status-bar p {
@@ -200,6 +214,12 @@ main {
   position: absolute;
   bottom: 0.5;
   left: 1.8rem;
+}
+#gold {
+  border: 1px solid yellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #xp-xps {
@@ -423,6 +443,7 @@ input{
   overflow: scroll;
 }
 .enemy {
+ 
   display: flex;
   position: relative;
   flex-direction: row;
@@ -440,6 +461,7 @@ input{
   filter: brightness(1.25);
   cursor: url('/images/cursors/UO-Attack-Mode.png'), pointer;
 }
+
 .enemy:active {
   filter: brightness(0.5);
   border: 0.75rem inset rgba(228, 228, 228, 0.5);
@@ -452,6 +474,9 @@ input{
   border: 0.2rem inset grey;
   border-radius: 0.5rem;
   height: 4rem;
+}
+.enemy:hover, .enemy:hover *{
+  cursor: url('/images/cursors/UO-Attack-Mode.png'), pointer;
 }
 
 .enemy-column {

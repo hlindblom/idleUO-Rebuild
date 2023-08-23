@@ -10,25 +10,31 @@
   padding: 0;
   
 }
+
+
+main, header, footer {
+  overflow: hidden;
+}
+
+
 body {
-  height: 100vh;
   display: grid;
   grid-template-rows: 2rem 1fr 1.25rem;
+  height: 100vh; /* Sets the body height to 100% of the viewport height */
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
-  
 }
 
 header {
-  grid: 1;
+  grid-row: 1;
   display: flex;
   align-items: center;
   padding-left: 0.75rem;
 }
 
 footer {
-  grid: 3;
+  grid-row: 3;
   font-style: italic;
   text-align: center;
 }
@@ -470,4 +476,57 @@ input{
   align-items: center;
   font-size: 3rem;
   color: #19191986;
+}
+
+
+/* RPG-themed Dropdown Styles */
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+select#fight-retreat {
+  width: 10rem;
+  font-family: 'uo-font', Georgia, serif;
+  background: #191919;
+  background-image: url("../images/textures/stone-texture.png"); /* Using the stone texture you've referenced in other styles */
+  background-size: cover;
+  color: #D4D5D5;
+  border: 2px solid #D4D5D5;
+  border-radius: 5px;
+  padding: 5px 30px 5px 10px;
+  appearance: none; /* This is to remove default appearance */
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  font-size: 1rem;
+  cursor: url('/images/cursors/UO-Gauntlet.png'), pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+select#fight-retreat:focus {
+  outline: none; 
+  box-shadow: 0 0 10px rgba(242, 240, 235, 0.5);
+}
+
+select#fight-retreat::-ms-expand {
+  display: none; /* Removes the dropdown arrow in IE and Edge */
+}
+
+.select-wrapper:after {
+  content: "▼";
+  font-size: 12px;
+  color: #D4D5D5;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; /* This ensures clicks on the arrow go through to the select element underneath */
+}
+
+/* If you want to style the dropdown options themselves (this has limited support in browsers) */
+select#fight-retreat option {
+  background-color: #191919;
+  color: #D4D5D5;
+  font-family: 'uo-font', Georgia, serif;
+  padding: 5px;
 }

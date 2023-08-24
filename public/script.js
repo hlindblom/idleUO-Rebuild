@@ -8,7 +8,7 @@ function updateXPView(xp) {
 }
 
 function updateLevelView(data) {
-  if (data.totalXP >= window.levels[data.lvl + 1]) ++data.lvl;
+  if (data.totalXP >= window.levels[data.lvl]) ++data.lvl;
   const lvlCounter = document.querySelector("#curr-level");
   lvlCounter.innerText = data.lvl;
 }
@@ -21,10 +21,18 @@ function clickWeapon(data) {
 function formatGold(gold) {
   if (gold < 1e6) return gold.toLocaleString("en-US"); // less than 100,000
   else if (gold < 1e9)
-    return (gold / 1e6).toFixed(3) + "m"; // less than 1 billion
+    return (gold / 1e6).toFixed(3) + " m"; // less than 1 billion
   else if (gold < 1e12)
-    return (gold / 1e9).toFixed(3) + "b"; // less than 1 trillion
-  else return (gold / 1e12).toFixed(3) + "t"; // trillion or more
+    return (gold / 1e9).toFixed(3) + " b"; // less than 1 trillion
+  else if (gold < 1e15)
+    return (gold / 1e12).toFixed(3) + " t"; // less than 1 quadrillion
+  else if (gold < 1e18)
+    return (gold / 1e15).toFixed(3) + " q"; // less than 1 quintillion
+  else if (gold < 1e21)
+    return (gold / 1e18).toFixed(3) + " qx"; // less than 1 sextillion
+  else if (gold < 1e24)
+    return (gold / 1e21).toFixed(3) + " sx"; // less than 1 septillion
+  else return (gold / 1e24).toFixed(3) + " sp"; // septillion or more
 }
 
 function updateGoldCounter(data) {
@@ -92,12 +100,12 @@ function renderProducersProgress(data) {}
  *   SLICE 3
  **************/
 
-function getProducerById(data, producerId) {
-  return data.producers.filter((prod) => prod.id === producerId)[0];
+function getEnemyById(data, enemyId) {
+  return data.enemies.filter((enemy) => enemy.id === enemyId)[0];
 }
 
-function canAffordProducer(data, producerId) {
-  return data.coffee >= getProducerById(data, producerId).price;
+function canAffordEnemy(data, enemyId) {
+  return data.gold >= getEnemyById(data, enemyId).price;
 }
 function canSellProducer(data, producerId) {
   return getProducerById(data, producerId).qty > 0;
@@ -112,13 +120,19 @@ function updatePrice(producer) {
   return Math.floor(producer.basePrice * Math.pow(1.25, producer.qty));
 }
 
-function attemptToBuyProducer(data, producerId) {
-  if (canAffordProducer(data, producerId)) {
-    const producer = getProducerById(data, producerId);
-    producer.qty++;
-    data.coffee -= producer.price;
-    producer.price = updatePrice(producer);
-    updateXPView((data.totalXP += producer.xpPerSecond));
+function attemptToBuyEnemy(data, enemyElement) {
+  if (canAffordEnemy(data, enemyElement.id)) {
+    const enemy = getEnemyById(data, enemyElement.id);
+    enemy.qty++;
+
+    data.gold -= enemy.price;
+    const currGold = document.querySelector("#totalGold");
+    currGold.innerText = data.gold;
+    const qtyCounter = enemyElement.querySelector(".qty-counter p");
+    qtyCounter.innerText = enemy.qty;
+
+    // producer.price = updatePrice(producer);
+    // updateXPView((data.totalXP += producer.xpPerSecond));
     return true;
   } else return false;
 }
@@ -189,7 +203,7 @@ function swingWeapon(playerImg, dummyImg) {
 }
 
 function dropLoot(scene) {
-  if (Math.floor(Math.random() * 100 + 1) < 20) {
+  if (Math.floor(Math.random() * 100 + 1) < 100) {
     const loot = document.createElement("img");
     loot.className = "loot";
     loot.src = "images/enemies/loot/gold.png";
@@ -217,7 +231,7 @@ function createEnemyButtons(data) {
     }</p>
                 <div class="cost">
                   <img draggable= false src="images/character/gold.png" alt="">
-                  <p>${enemy.price.toLocaleString("en-US")}</p>
+                  <p>${formatGold(enemy.price)}</p>
                 </div>
               </div>
             </div>
@@ -257,7 +271,6 @@ if (typeof process === "undefined") {
   createEnemyButtons(data);
   createEnemyScene(data);
 
-  const fightRetreat = document.querySelector("#fight-retreat");
   const panelButtons = document.querySelector("#middleTop");
 
   /*******************\
@@ -267,7 +280,6 @@ if (typeof process === "undefined") {
   const playerImg = document.querySelector("#player-dummy-scene");
   const dummyImg = document.querySelector("#dummy-scene");
   const trainingScene = document.querySelector("#training-scene");
-  const leftColumn = document.querySelector("#column-left");
 
   weaponIcon.addEventListener("click", () => {
     clickWeapon(data);
@@ -276,7 +288,7 @@ if (typeof process === "undefined") {
   });
 
   /*******************\
-    |*** RIGHT COLUMN **|
+    |*** MIDDLE COLUMN **|
     \*******************/
   const battleSection = document.querySelector("#battle-section");
   battleSection.addEventListener("click", (event) => {
@@ -309,9 +321,22 @@ if (typeof process === "undefined") {
     modal.style.display = "none";
   });
 
+  /*******************\
+    |*** RIGHT COLUMN **|
+    \*******************/
+  const fightRetreat = document.querySelector("#fight-retreat");
+
   fightRetreat.addEventListener("change", (event) => {
     data.fightRetreat = event.target.value;
     tick(data);
+  });
+
+  const enemyBlock = document.querySelector("#enemies_container");
+  enemyBlock.addEventListener("click", (event) => {
+    const parentElement = event.target.closest(".enemy");
+    if (parentElement && parentElement.parentNode === enemyBlock) {
+      attemptToBuyEnemy(data, parentElement);
+    }
   });
 
   setInterval(() => tick(data), 1000);

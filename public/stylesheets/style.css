@@ -116,7 +116,6 @@ main {
   top: 25rem;
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid green;
 }
 
 #player-hair {
@@ -173,10 +172,6 @@ main {
   left: 4rem; 
   display: flex;
   flex-direction: row;
-  border: 1px solid red;
-}
-#health-mana {
-  border: 1px solid red;
 }
 
 .status-bar {
@@ -216,7 +211,6 @@ main {
   left: 1.8rem;
 }
 #gold {
-  border: 1px solid yellow;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -423,7 +417,8 @@ input{
 #column-right {
   height: 100vh;
   grid-column: 5;
-  padding-top: 6rem;
+  padding-top: 20%;
+
   background-image: url("../images/backgrounds/background-store.png");
   background-position: bottom left;
   background-size: cover;
@@ -439,8 +434,8 @@ input{
   box-shadow: -1px 0 .4em #191919, 1px 0px 0.4em #191919;
 }
 #enemies_container {
-  height: 100%;
-  overflow: scroll;
+  max-height: 90%;
+  overflow-y: auto;
 }
 .enemy {
  

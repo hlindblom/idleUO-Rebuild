@@ -106,7 +106,7 @@ main {
 #character-panel {
   position: absolute;
   left: 10%;
-  top: 5%
+  top: 5%;
 }
 
 #player-info {
@@ -163,7 +163,12 @@ main {
   border: 0.5rem inset black;
 }
 
-
+#levelUpAnimation {
+  z-index: 10;
+  position: absolute;
+  bottom: 5rem;
+  left: 3.5rem;
+}
 
 
 #top-half-player-section{

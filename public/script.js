@@ -2,43 +2,55 @@
  *   Clicking & Updating
  **************/
 
+function playLevelUpAnimation() {
+  const levelUp = document.querySelector("#levelUpAnimation");
+  levelUp.src = "/images/character/levelUp.gif";
+  setTimeout(() => {
+    levelUp.src = "";
+  }, 1500);
+}
+
 function updateXPView(xp) {
   const xpCounter = document.querySelector("#xp_counter");
-  xpCounter.innerText = xp;
+  xpCounter.innerText = xp.toLocaleString("en-US");
 }
 
 function updateLevelView(data) {
-  if (data.totalXP >= window.levels[data.lvl]) ++data.lvl;
-  const lvlCounter = document.querySelector("#curr-level");
-  lvlCounter.innerText = data.lvl;
+  if (data.totalXP >= window.levels[data.lvl]) {
+    ++data.lvl;
+    const lvlCounter = document.querySelector("#curr-level");
+    lvlCounter.innerText = formatNumber(data.lvl);
+    playLevelUpAnimation();
+  }
 }
 
 function clickWeapon(data) {
-  updateXPView(++data.totalXP);
+  data.totalXP += 1;
+  updateXPView(data.totalXP);
   updateLevelView(data);
   // renderProducers(data);
 }
-function formatGold(gold) {
-  if (gold < 1e6) return gold.toLocaleString("en-US"); // less than 100,000
-  else if (gold < 1e9)
-    return (gold / 1e6).toFixed(3) + " m"; // less than 1 billion
-  else if (gold < 1e12)
-    return (gold / 1e9).toFixed(3) + " b"; // less than 1 trillion
-  else if (gold < 1e15)
-    return (gold / 1e12).toFixed(3) + " t"; // less than 1 quadrillion
-  else if (gold < 1e18)
-    return (gold / 1e15).toFixed(3) + " q"; // less than 1 quintillion
-  else if (gold < 1e21)
-    return (gold / 1e18).toFixed(3) + " qx"; // less than 1 sextillion
-  else if (gold < 1e24)
-    return (gold / 1e21).toFixed(3) + " sx"; // less than 1 septillion
-  else return (gold / 1e24).toFixed(3) + " sp"; // septillion or more
+function formatNumber(number) {
+  if (number < 1e6) return number.toLocaleString("en-US"); // less than 100,000
+  else if (number < 1e9)
+    return (number / 1e6).toFixed(3) + " m"; // less than 1 billion
+  else if (number < 1e12)
+    return (number / 1e9).toFixed(3) + " b"; // less than 1 trillion
+  else if (number < 1e15)
+    return (number / 1e12).toFixed(3) + " t"; // less than 1 quadrillion
+  else if (number < 1e18)
+    return (number / 1e15).toFixed(3) + " q"; // less than 1 quintillion
+  else if (number < 1e21)
+    return (number / 1e18).toFixed(3) + " qx"; // less than 1 sextillion
+  else if (number < 1e24)
+    return (number / 1e21).toFixed(3) + " sx"; // less than 1 septillion
+  else return (number / 1e24).toFixed(3) + " sp"; // septillion or more
 }
 
 function updateGoldCounter(data) {
   const currGold = document.querySelector("#totalGold");
   data.gold++;
-  currGold.innerText = formatGold(data.gold);
+  currGold.innerText = formatNumber(data.gold);
 }
 
 /**************
@@ -203,7 +215,7 @@ function swingWeapon(playerImg, dummyImg) {
 }
 
 function dropLoot(scene) {
-  if (Math.floor(Math.random() * 100 + 1) < 100) {
+  if (Math.floor(Math.random() * 20 + 1) < 100) {
     const loot = document.createElement("img");
     loot.className = "loot";
     loot.src = "images/enemies/loot/gold.png";
@@ -231,7 +243,7 @@ function createEnemyButtons(data) {
     }</p>
                 <div class="cost">
                   <img draggable= false src="images/character/gold.png" alt="">
-                  <p>${formatGold(enemy.price)}</p>
+                  <p>${formatNumber(enemy.price)}</p>
                 </div>
               </div>
             </div>

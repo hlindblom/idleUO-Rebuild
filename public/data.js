@@ -13,7 +13,7 @@ window.data = {
       price: 10,
       basePrice: 10,
       unlocked: true,
-      xpPerSecond: 1,
+      xpPerSecond: 0.1,
       qty: 0,
     },
     {

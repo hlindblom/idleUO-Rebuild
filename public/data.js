@@ -5,7 +5,7 @@ window.data = {
   xps: 0,
   health: 100,
   mana: 100,
-  gold: 0,
+  gold: 109,
   fightRetreat: "Fight",
   enemies: [
     {

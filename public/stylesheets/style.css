@@ -381,7 +381,7 @@ input{
   min-height: 9.5rem;
   padding: 1.5rem 0;
 }
-#training-scene{
+#training-container{
   background-image: url('../images/enemies/rooms/dummy-scene.png');
   background-size: cover;
 }

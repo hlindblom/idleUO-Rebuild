@@ -92,8 +92,11 @@ function deleteAllChildNodes(parent) {
 function renderEnemies(data, parentElement) {
   console.log(parentElement.id);
   const currEnemy = getEnemyById(data, parentElement.id);
+  console.log("this is my:", currEnemy);
   if (currEnemy.qty <= 5) {
-    const enemyContainer = document.querySelector(`#${parentElement.id}-scene`);
+    const enemyContainer = document.querySelector(
+      `#${parentElement.id}-container`
+    );
     enemyContainer.innerHTML = enemyContainer.innerHTML.concat(
       ` <img draggable= false  class="enemy-scene" src="images/enemies/static/${parentElement.id}-static.png" alt=""> `
     );
@@ -281,8 +284,6 @@ function createEnemyScene(data) {
     div.style.backgroundImage = `url(images/enemies/rooms/${enemy.id}-scene.png)`;
     html = `
             <img draggable= false  class="player-scene" src="images/character/male/animations/attack.gif" alt="">
-            <img draggable= false class="enemy-scene" src="images/enemies/static/${enemy.id}-static.png" alt=""> 
-            <img draggable= false  class="enemy-scene" src="images/enemies/static/${enemy.id}-static.png" alt=""> 
         `;
     div.innerHTML = html;
     const divider = document.createElement("div");
@@ -309,7 +310,7 @@ if (typeof process === "undefined") {
   const weaponIcon = document.getElementById("weapon-icon");
   const playerImg = document.querySelector("#player-dummy-scene");
   const dummyImg = document.querySelector("#dummy-scene");
-  const trainingScene = document.querySelector("#training-scene");
+  const trainingScene = document.querySelector("#training-container");
 
   weaponIcon.addEventListener("click", () => {
     clickWeapon(data);

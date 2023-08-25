@@ -136,7 +136,6 @@ function canSellProducer(data, producerId) {
 
 function updateXPSView(xpPerSecond) {
   const xpPerSecondSpan = document.querySelector("#xp_ps-container");
-  console.log("HERE!!!", xpPerSecond);
   xpPerSecondSpan.innerText = formatNumber(xpPerSecond);
 }
 
@@ -151,13 +150,13 @@ function attemptToBuyEnemy(data, enemyElement) {
 
     data.gold -= enemy.price;
     const currGold = document.querySelector("#totalGold");
-    currGold.innerText = data.gold;
+    currGold.innerText = formatNumber(data.gold);
     const qtyCounter = enemyElement.querySelector(".qty-counter p");
-    qtyCounter.innerText = enemy.qty;
+    qtyCounter.innerText = formatNumber(enemy.qty);
 
     enemy.price = updatePrice(enemy);
     const enemyPrice = enemyElement.querySelector(".cost p");
-    enemyPrice.innerText = enemy.price;
+    enemyPrice.innerText = formatNumber(enemy.price);
     updateXPSView((data.xps += enemy.xpPerSecond));
     return true;
   } else return false;
@@ -278,18 +277,20 @@ function createEnemyScene(data) {
   const battleSection = document.querySelector("#battle-section");
   data.enemies.forEach((enemy) => {
     if (enemy.id === "training") return;
-    const div = document.createElement("div");
-    div.setAttribute("id", `${enemy.id}-container`);
-    div.className = "battle-scene";
-    div.style.backgroundImage = `url(images/enemies/rooms/${enemy.id}-scene.png)`;
-    html = `
-            <img draggable= false  class="player-scene" src="images/character/male/animations/attack.gif" alt="">
-        `;
-    div.innerHTML = html;
-    const divider = document.createElement("div");
-    divider.setAttribute("class", "scene-divider");
-    battleSection.append(div);
-    battleSection.append(divider);
+    else if (enemy.unlocked) {
+      const div = document.createElement("div");
+      div.setAttribute("id", `${enemy.id}-container`);
+      div.className = "battle-scene";
+      div.style.backgroundImage = `url(images/enemies/rooms/${enemy.id}-scene.png)`;
+      html = `
+              <img draggable= false  class="player-scene" src="images/character/male/animations/attack.gif" alt="">
+          `;
+      div.innerHTML = html;
+      const divider = document.createElement("div");
+      divider.setAttribute("class", "scene-divider");
+      battleSection.append(div);
+      battleSection.append(divider);
+    }
   });
 }
 

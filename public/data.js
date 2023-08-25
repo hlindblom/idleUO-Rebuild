@@ -5,7 +5,7 @@ window.data = {
   xps: 0,
   health: 100,
   mana: 100,
-  gold: 109,
+  gold: 10000000000,
   fightRetreat: "Fight",
   enemies: [
     {
@@ -20,7 +20,7 @@ window.data = {
       id: "rat",
       price: 110,
       basePrice: 110,
-      unlocked: false,
+      unlocked: true,
       xpPerSecond: 2,
       qty: 0,
     },

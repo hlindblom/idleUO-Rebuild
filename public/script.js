@@ -12,7 +12,7 @@ function playLevelUpAnimation() {
 
 function updateXPView(xp) {
   const xpCounter = document.querySelector("#xp_counter");
-  xpCounter.innerText = xp.toLocaleString("en-US");
+  xpCounter.innerText = formatNumber(xp);
 }
 
 function updateLevelView(data) {
@@ -89,14 +89,22 @@ function deleteAllChildNodes(parent) {
   while (parent.hasChildNodes()) parent.removeChild(parent.firstChild);
 }
 
-function renderProducers(data) {
-  const prodContainer = document.querySelector("#producer_container");
-  unlockProducers(data.producers, data.coffee);
-  const unlockedProducers = getUnlockedProducers(data);
-  deleteAllChildNodes(prodContainer);
-  unlockedProducers.forEach((prod) => {
-    prodContainer.append(makeProducerDiv(prod, data));
-  });
+function renderEnemies(data, parentElement) {
+  console.log(parentElement.id);
+  const currEnemy = getEnemyById(data, parentElement.id);
+  if (currEnemy.qty <= 5) {
+    const enemyContainer = document.querySelector(`#${parentElement.id}-scene`);
+    enemyContainer.innerHTML = enemyContainer.innerHTML.concat(
+      ` <img draggable= false  class="enemy-scene" src="images/enemies/static/${parentElement.id}-static.png" alt=""> `
+    );
+  }
+
+  // unlockProducers(data.producers, data.coffee);
+  // const unlockedProducers = getUnlockedProducers(data);
+  // deleteAllChildNodes(prodContainer);
+  // unlockedProducers.forEach((prod) => {
+  //   prodContainer.append(makeProducerDiv(prod, data));
+  // });
 }
 
 function producerNumberCount(qty) {
@@ -123,13 +131,14 @@ function canSellProducer(data, producerId) {
   return getProducerById(data, producerId).qty > 0;
 }
 
-function updatexpPerSecondView(xpPerSecond) {
-  const xpPerSecondSpan = document.querySelector("#xpPerSecond");
-  xpPerSecondSpan.innerText = xpPerSecond;
+function updateXPSView(xpPerSecond) {
+  const xpPerSecondSpan = document.querySelector("#xp_ps-container");
+  console.log("HERE!!!", xpPerSecond);
+  xpPerSecondSpan.innerText = formatNumber(xpPerSecond);
 }
 
-function updatePrice(producer) {
-  return Math.floor(producer.basePrice * Math.pow(1.25, producer.qty));
+function updatePrice(enemy) {
+  return Math.floor(enemy.basePrice * Math.pow(1.25, enemy.qty));
 }
 
 function attemptToBuyEnemy(data, enemyElement) {
@@ -143,45 +152,49 @@ function attemptToBuyEnemy(data, enemyElement) {
     const qtyCounter = enemyElement.querySelector(".qty-counter p");
     qtyCounter.innerText = enemy.qty;
 
-    // producer.price = updatePrice(producer);
-    // updateXPView((data.totalXP += producer.xpPerSecond));
+    enemy.price = updatePrice(enemy);
+    const enemyPrice = enemyElement.querySelector(".cost p");
+    enemyPrice.innerText = enemy.price;
+    updateXPSView((data.xps += enemy.xpPerSecond));
     return true;
   } else return false;
 }
 
-function attemptToSellProducer(data, producerId) {
-  if (canSellProducer(data, producerId)) {
-    const producer = getProducerById(data, producerId);
-    producer.qty--;
-    data.coffee += Math.floor(producer.price * 0.2);
-    producer.price = updatePrice(producer);
-    updateCPSView((data.totalXP -= producer.xpPerSecond));
-    return true;
-  } else return false;
+// function attemptToSellProducer(data, producerId) {
+//   if (canSellProducer(data, producerId)) {
+//     const producer = getProducerById(data, producerId);
+//     producer.qty--;
+//     data.coffee += Math.floor(producer.price * 0.2);
+//     producer.price = updatePrice(producer);
+//     updateCPSView((data.totalXP -= producer.xpPerSecond));
+//     return true;
+//   } else return false;
+// }
+
+function buyButtonHelper(data, parentElement) {
+  if (attemptToBuyEnemy(data, parentElement)) {
+    renderEnemies(data, parentElement);
+  } else window.alert("Not enough gold!");
 }
 
-function buyButtonHelper(event, data) {
-  if (attemptToBuyProducer(data, event.target.id.slice(4))) {
-    renderProducers(data);
-    updateXPView(data.xp);
-  } else window.alert("Not enough coffee!");
-}
+// function sellButtonHelper(event, data) {
+//   if (attemptToSellProducer(data, event.target.id.slice(4))) {
+//     renderProducers(data);
+//     updateXPView(data.xp);
+//   } else window.alert("Not enough coffee!");
+// }
 
-function sellButtonHelper(event, data) {
-  if (attemptToSellProducer(data, event.target.id.slice(4))) {
-    renderProducers(data);
-    updateXPView(data.xp);
-  } else window.alert("Not enough coffee!");
-}
-
-function buyButtonClick(event, data) {
-  if (event.target.tagName === "BUTTON") {
-    if (data.fightRetreat === "Fight") buyButtonHelper(event, data);
-    else sellButtonHelper(event, data);
+function enemyClick(data, parentElement) {
+  const fightOrRetreat = document.querySelector("#fight-retreat");
+  if (fightOrRetreat.value === "Fight") buyButtonHelper(data, parentElement);
+  else {
+    console.log("IM TRYING TO SELL!!");
+    // sellButtonHelper(event, data);
   }
 }
 
 function tick(data) {
+  data.totalXP += data.xps;
   updateXPView(data.totalXP);
 }
 
@@ -196,20 +209,22 @@ function changeNotification() {
   notificationElement.textContent = `${newAlert.type}: ${newAlert.message}`;
 }
 
-function swingWeapon(playerImg, dummyImg) {
+function swingWeapon() {
+  const player = document.querySelector("#player-dummy-scene");
+  const dummy = document.querySelector("#dummy-scene");
   if (
-    !playerImg.src.includes("attack.gif") &&
-    !dummyImg.src.includes("dummy-hit.gif")
+    !player.src.includes("attack.gif") &&
+    !player.src.includes("dummy-hit.gif")
   ) {
-    playerImg.src = "/images/character/male/animations/attack.gif";
+    player.src = "/images/character/male/animations/attack.gif";
     setTimeout(() => {
-      dummyImg.src = "/images/enemies/animations/dummy-hit.gif";
+      dummy.src = "/images/enemies/animations/dummy-hit.gif";
     }, 100);
     setTimeout(() => {
-      playerImg.src = "/images/character/male/animations/idle-static.png";
+      player.src = "/images/character/male/animations/idle-static.png";
     }, 400);
     setTimeout(() => {
-      dummyImg.src = "/images/enemies/static/dummy-static.png";
+      dummy.src = "/images/enemies/static/training-static.png";
     }, 500);
   }
 }
@@ -265,12 +280,15 @@ function createEnemyScene(data) {
     div.className = "battle-scene";
     div.style.backgroundImage = `url(images/enemies/rooms/${enemy.id}-scene.png)`;
     html = `
-            <img draggable= false id="player-${enemy.id}-scene" class="player-scene" src="images/character/male/animations/idle-static.png" alt="">
-            <img draggable= false id="${enemy.id}-scene" class="enemy-scene" src="images/enemies/static/${enemy.id}-static.png" alt="">
-            <div class="scene-divider"></div>
+            <img draggable= false  class="player-scene" src="images/character/male/animations/attack.gif" alt="">
+            <img draggable= false class="enemy-scene" src="images/enemies/static/${enemy.id}-static.png" alt=""> 
+            <img draggable= false  class="enemy-scene" src="images/enemies/static/${enemy.id}-static.png" alt=""> 
         `;
     div.innerHTML = html;
+    const divider = document.createElement("div");
+    divider.setAttribute("class", "scene-divider");
     battleSection.append(div);
+    battleSection.append(divider);
   });
 }
 
@@ -295,7 +313,7 @@ if (typeof process === "undefined") {
 
   weaponIcon.addEventListener("click", () => {
     clickWeapon(data);
-    swingWeapon(playerImg, dummyImg);
+    swingWeapon();
     dropLoot(trainingScene);
   });
 
@@ -347,7 +365,7 @@ if (typeof process === "undefined") {
   enemyBlock.addEventListener("click", (event) => {
     const parentElement = event.target.closest(".enemy");
     if (parentElement && parentElement.parentNode === enemyBlock) {
-      attemptToBuyEnemy(data, parentElement);
+      enemyClick(data, parentElement);
     }
   });
 

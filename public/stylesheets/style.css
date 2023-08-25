@@ -375,7 +375,11 @@ input{
 
 .battle-scene{
   position: relative;
-  height: 9.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  min-height: 9.5rem;
+  padding: 1.5rem 0;
 }
 #training-scene{
   background-image: url('../images/enemies/rooms/dummy-scene.png');
@@ -384,14 +388,15 @@ input{
 
 .scene-divider {
   position: relative;
+  z-index: 10;
   height: 1rem;
   background-image: url('../images/textures/scene-divider.png');
   background-size: contain;
   background-repeat: repeat-x;
 }
 .player-scene {
-  position: absolute;
-  left: 5rem;
+  margin-right: -1.5rem;
+  margin-left: 10%;
   top: 3rem;
 }
 .control {
@@ -400,16 +405,18 @@ input{
 }
 
 .enemy-scene {
-  position: absolute;
-  left: 8.5rem;
-  top: 1rem;
+  margin-left: 1%;
+  min-height: 3rem;
+  bottom: 2.2rem;
 }
+
 .loot {
   position: absolute;
 }
 .loot:hover {
   cursor: url('/images/cursors/UO-precision.png') ,pointer;
 }
+
 /* RIGHT DIVIDER */
 #right-divider {
   grid-column: 4;

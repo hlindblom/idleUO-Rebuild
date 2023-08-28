@@ -198,6 +198,7 @@ function enemyClick(data, parentElement) {
 function tick(data) {
   data.totalXP += data.xps;
   updateXPView(data.totalXP);
+  updateLevelView(data);
 }
 
 function getNewNotification() {

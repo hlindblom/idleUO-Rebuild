@@ -1,15 +1,15 @@
 window.data = {
-  playerName: "Balthasar",
+  playerName: 'Balthasar',
   lvl: 1,
   totalXP: 0,
   xps: 0,
   health: 100,
   mana: 100,
   gold: 10000000000,
-  fightRetreat: "Fight",
+  fightRetreat: 'Fight',
   enemies: [
     {
-      id: "training",
+      id: 'training',
       price: 10,
       basePrice: 10,
       unlocked: true,
@@ -17,7 +17,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "rat",
+      id: 'rat',
       price: 110,
       basePrice: 110,
       unlocked: true,
@@ -25,7 +25,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "orc",
+      id: 'orc',
       price: 1200,
       basePrice: 1200,
       unlocked: false,
@@ -33,7 +33,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "skeleton",
+      id: 'skeleton',
       price: 13300,
       basePrice: 13300,
       unlocked: false,
@@ -41,7 +41,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "orc-warrior",
+      id: 'orc-warrior',
       price: 146000,
       basePrice: 146000,
       unlocked: false,
@@ -49,7 +49,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "ogre",
+      id: 'ogre',
       price: 1610510,
       basePrice: 1610510,
       unlocked: false,
@@ -57,7 +57,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "water-ele",
+      id: 'water-ele',
       price: 17700000,
       basePrice: 17700000,
       unlocked: false,
@@ -65,7 +65,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "troll",
+      id: 'troll',
       price: 200000000,
       basePrice: 200000000,
       unlocked: false,
@@ -73,7 +73,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "earth-ele",
+      id: 'earth-ele',
       price: 2150000000,
       basePrice: 2150000000,
       unlocked: false,
@@ -81,7 +81,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "ghoul",
+      id: 'ghoul',
       price: 23500000000,
       basePrice: 23500000000,
       unlocked: false,
@@ -89,7 +89,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "terathan",
+      id: 'terathan',
       price: 260400000000,
       basePrice: 260400000000,
       unlocked: false,
@@ -97,7 +97,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "liche",
+      id: 'liche',
       price: 2900000000000,
       basePrice: 2900000000000,
       unlocked: false,
@@ -105,7 +105,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "daemon",
+      id: 'daemon',
       price: 14000000000000,
       basePrice: 14000000000000,
       unlocked: false,
@@ -113,7 +113,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "shadow-lord",
+      id: 'shadow-lord',
       price: 32400000000000,
       basePrice: 32400000000000,
       unlocked: false,
@@ -121,7 +121,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "demon-knight",
+      id: 'demon-knight',
       price: 345200000000000,
       basePrice: 345200000000000,
       unlocked: false,
@@ -129,7 +129,7 @@ window.data = {
       qty: 0,
     },
     {
-      id: "red-dragon",
+      id: 'red-dragon',
       price: 3800000000000000,
       basePrice: 3800000000000000,
       unlocked: false,

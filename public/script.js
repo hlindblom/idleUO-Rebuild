@@ -3,22 +3,22 @@
  **************/
 
 function playLevelUpAnimation() {
-  const levelUp = document.querySelector("#levelUpAnimation");
-  levelUp.src = "/images/character/levelUp.gif";
+  const levelUp = document.querySelector('#levelUpAnimation');
+  levelUp.src = '/images/character/levelUp.gif';
   setTimeout(() => {
-    levelUp.src = "";
+    levelUp.src = '';
   }, 1500);
 }
 
 function updateXPView(xp) {
-  const xpCounter = document.querySelector("#xp_counter");
+  const xpCounter = document.querySelector('#xp_counter');
   xpCounter.innerText = formatNumber(xp);
 }
 
 function updateLevelView(data) {
   if (data.totalXP >= window.levels[data.lvl]) {
     ++data.lvl;
-    const lvlCounter = document.querySelector("#curr-level");
+    const lvlCounter = document.querySelector('#curr-level');
     lvlCounter.innerText = formatNumber(data.lvl);
     playLevelUpAnimation();
   }
@@ -31,24 +31,24 @@ function clickWeapon(data) {
   // renderProducers(data);
 }
 function formatNumber(number) {
-  if (number < 1e6) return number.toLocaleString("en-US"); // less than 100,000
+  if (number < 1e6) return number.toLocaleString('en-US'); // less than 100,000
   else if (number < 1e9)
-    return (number / 1e6).toFixed(3) + " m"; // less than 1 billion
+    return (number / 1e6).toFixed(3) + ' m'; // less than 1 billion
   else if (number < 1e12)
-    return (number / 1e9).toFixed(3) + " b"; // less than 1 trillion
+    return (number / 1e9).toFixed(3) + ' b'; // less than 1 trillion
   else if (number < 1e15)
-    return (number / 1e12).toFixed(3) + " t"; // less than 1 quadrillion
+    return (number / 1e12).toFixed(3) + ' t'; // less than 1 quadrillion
   else if (number < 1e18)
-    return (number / 1e15).toFixed(3) + " q"; // less than 1 quintillion
+    return (number / 1e15).toFixed(3) + ' q'; // less than 1 quintillion
   else if (number < 1e21)
-    return (number / 1e18).toFixed(3) + " qx"; // less than 1 sextillion
+    return (number / 1e18).toFixed(3) + ' qx'; // less than 1 sextillion
   else if (number < 1e24)
-    return (number / 1e21).toFixed(3) + " sx"; // less than 1 septillion
-  else return (number / 1e24).toFixed(3) + " sp"; // septillion or more
+    return (number / 1e21).toFixed(3) + ' sx'; // less than 1 septillion
+  else return (number / 1e24).toFixed(3) + ' sp'; // septillion or more
 }
 
 function updateGoldCounter(data) {
-  const currGold = document.querySelector("#totalGold");
+  const currGold = document.querySelector('#totalGold');
   data.gold++;
   currGold.innerText = formatNumber(data.gold);
 }
@@ -73,14 +73,14 @@ function getActiveProducers(data) {
 function makeDisplayNameFromId(id) {
   return id
     .toLowerCase()
-    .split("_")
+    .split('_')
     .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
+    .join(' ');
 }
 
 function makeProducerProgress(producer) {
-  const containerImg = document.createElement("img");
-  containerImg.className = "producerImg";
+  const containerImg = document.createElement('img');
+  containerImg.className = 'producerImg';
   containerImg.src = `images/producers/${producer}.png`;
   return containerImg;
 }
@@ -92,7 +92,7 @@ function deleteAllChildNodes(parent) {
 function renderEnemies(data, parentElement) {
   console.log(parentElement.id);
   const currEnemy = getEnemyById(data, parentElement.id);
-  console.log("this is my:", currEnemy);
+  console.log('this is my:', currEnemy);
   if (currEnemy.qty <= 5) {
     const enemyContainer = document.querySelector(
       `#${parentElement.id}-container`
@@ -111,8 +111,8 @@ function renderEnemies(data, parentElement) {
 }
 
 function producerNumberCount(qty) {
-  const counterDiv = document.createElement("div");
-  counterDiv.className = "prod-counter";
+  const counterDiv = document.createElement('div');
+  counterDiv.className = 'prod-counter';
   counterDiv.innerHTML = `<h3>${qty}</h3>`;
   return counterDiv;
 }
@@ -135,7 +135,7 @@ function canSellProducer(data, producerId) {
 }
 
 function updateXPSView(xpPerSecond) {
-  const xpPerSecondSpan = document.querySelector("#xp_ps-container");
+  const xpPerSecondSpan = document.querySelector('#xp_ps-container');
   xpPerSecondSpan.innerText = formatNumber(xpPerSecond);
 }
 
@@ -149,13 +149,13 @@ function attemptToBuyEnemy(data, enemyElement) {
     enemy.qty++;
 
     data.gold -= enemy.price;
-    const currGold = document.querySelector("#totalGold");
+    const currGold = document.querySelector('#totalGold');
     currGold.innerText = formatNumber(data.gold);
-    const qtyCounter = enemyElement.querySelector(".qty-counter p");
+    const qtyCounter = enemyElement.querySelector('.qty-counter p');
     qtyCounter.innerText = formatNumber(enemy.qty);
 
     enemy.price = updatePrice(enemy);
-    const enemyPrice = enemyElement.querySelector(".cost p");
+    const enemyPrice = enemyElement.querySelector('.cost p');
     enemyPrice.innerText = formatNumber(enemy.price);
     updateXPSView((data.xps += enemy.xpPerSecond));
     return true;
@@ -176,7 +176,7 @@ function attemptToBuyEnemy(data, enemyElement) {
 function buyButtonHelper(data, parentElement) {
   if (attemptToBuyEnemy(data, parentElement)) {
     renderEnemies(data, parentElement);
-  } else window.alert("Not enough gold!");
+  } else window.alert('Not enough gold!');
 }
 
 // function sellButtonHelper(event, data) {
@@ -187,10 +187,10 @@ function buyButtonHelper(data, parentElement) {
 // }
 
 function enemyClick(data, parentElement) {
-  const fightOrRetreat = document.querySelector("#fight-retreat");
-  if (fightOrRetreat.value === "Fight") buyButtonHelper(data, parentElement);
+  const fightOrRetreat = document.querySelector('#fight-retreat');
+  if (fightOrRetreat.value === 'Fight') buyButtonHelper(data, parentElement);
   else {
-    console.log("IM TRYING TO SELL!!");
+    console.log('IM TRYING TO SELL!!');
     // sellButtonHelper(event, data);
   }
 }
@@ -206,36 +206,36 @@ function getNewNotification() {
   return alerts[randomIdx];
 }
 function changeNotification() {
-  const notificationElement = document.querySelector("#panel-middle");
+  const notificationElement = document.querySelector('#panel-middle');
   const newAlert = getNewNotification();
   notificationElement.textContent = `${newAlert.type}: ${newAlert.message}`;
 }
 
 function swingWeapon() {
-  const player = document.querySelector("#player-dummy-scene");
-  const dummy = document.querySelector("#dummy-scene");
+  const player = document.querySelector('#player-dummy-scene');
+  const dummy = document.querySelector('#dummy-scene');
   if (
-    !player.src.includes("attack.gif") &&
-    !player.src.includes("dummy-hit.gif")
+    !player.src.includes('attack.gif') &&
+    !player.src.includes('dummy-hit.gif')
   ) {
-    player.src = "/images/character/male/animations/attack.gif";
+    player.src = '/images/character/male/animations/attack.gif';
     setTimeout(() => {
-      dummy.src = "/images/enemies/animations/dummy-hit.gif";
+      dummy.src = '/images/enemies/animations/dummy-hit.gif';
     }, 100);
     setTimeout(() => {
-      player.src = "/images/character/male/animations/idle-static.png";
+      player.src = '/images/character/male/animations/idle-static.png';
     }, 400);
     setTimeout(() => {
-      dummy.src = "/images/enemies/static/training-static.png";
+      dummy.src = '/images/enemies/static/training-static.png';
     }, 500);
   }
 }
 
 function dropLoot(scene) {
   if (Math.floor(Math.random() * 20 + 1) < 100) {
-    const loot = document.createElement("img");
-    loot.className = "loot";
-    loot.src = "images/enemies/loot/gold.png";
+    const loot = document.createElement('img');
+    loot.className = 'loot';
+    loot.src = 'images/enemies/loot/gold.png';
     loot.draggable = false;
     loot.style.left = `${Math.random() * (11 - 7 + 1) + 7}rem`;
     loot.style.top = `${Math.random() * (6.5 - 5 + 1) + 5}rem`;
@@ -244,19 +244,19 @@ function dropLoot(scene) {
 }
 
 function createEnemyButtons(data) {
-  const enemyContainer = document.querySelector("#enemies_container");
+  const enemyContainer = document.querySelector('#enemies_container');
   data.enemies.forEach((enemy) => {
-    const div = document.createElement("div");
-    div.setAttribute("id", enemy.id);
-    div.className = "enemy";
+    const div = document.createElement('div');
+    div.setAttribute('id', enemy.id);
+    div.className = 'enemy';
     const html = `
             <div class="enemy-column">
               <img draggable= false class="enemy-profile" src="images/enemies/profiles/${
                 enemy.id
               }-profile.png" alt="Picture of ${enemy.id}">
               <div>
-                <p class="enemy-title wb-text">${enemy.id.replace("-", " ")}${
-      enemy.id === "training" ? "" : "s"
+                <p class="enemy-title wb-text">${enemy.id.replace('-', ' ')}${
+      enemy.id === 'training' ? '' : 's'
     }</p>
                 <div class="cost">
                   <img draggable= false src="images/character/gold.png" alt="">
@@ -274,20 +274,20 @@ function createEnemyButtons(data) {
 }
 
 function createEnemyScene(data) {
-  const battleSection = document.querySelector("#battle-section");
+  const battleSection = document.querySelector('#battle-section');
   data.enemies.forEach((enemy) => {
-    if (enemy.id === "training") return;
+    if (enemy.id === 'training') return;
     else if (enemy.unlocked) {
-      const div = document.createElement("div");
-      div.setAttribute("id", `${enemy.id}-container`);
-      div.className = "battle-scene";
+      const div = document.createElement('div');
+      div.setAttribute('id', `${enemy.id}-container`);
+      div.className = 'battle-scene';
       div.style.backgroundImage = `url(images/enemies/rooms/${enemy.id}-scene.png)`;
       html = `
               <img draggable= false  class="player-scene" src="images/character/male/animations/attack.gif" alt="">
           `;
       div.innerHTML = html;
-      const divider = document.createElement("div");
-      divider.setAttribute("class", "scene-divider");
+      const divider = document.createElement('div');
+      divider.setAttribute('class', 'scene-divider');
       battleSection.append(div);
       battleSection.append(divider);
     }
@@ -298,22 +298,22 @@ function createEnemyScene(data) {
  *  Start your engines!
  *************************/
 
-if (typeof process === "undefined") {
+if (typeof process === 'undefined') {
   let data = window.data;
   createEnemyButtons(data);
   createEnemyScene(data);
 
-  const panelButtons = document.querySelector("#middleTop");
+  const panelButtons = document.querySelector('#middleTop');
 
   /*******************\
     |*** LEFT COLUMN ***|
     \*******************/
-  const weaponIcon = document.getElementById("weapon-icon");
-  const playerImg = document.querySelector("#player-dummy-scene");
-  const dummyImg = document.querySelector("#dummy-scene");
-  const trainingScene = document.querySelector("#training-container");
+  const weaponIcon = document.getElementById('weapon-icon');
+  const playerImg = document.querySelector('#player-dummy-scene');
+  const dummyImg = document.querySelector('#dummy-scene');
+  const trainingScene = document.querySelector('#training-container');
 
-  weaponIcon.addEventListener("click", () => {
+  weaponIcon.addEventListener('click', () => {
     clickWeapon(data);
     swingWeapon();
     dropLoot(trainingScene);
@@ -322,50 +322,50 @@ if (typeof process === "undefined") {
   /*******************\
     |*** MIDDLE COLUMN **|
     \*******************/
-  const battleSection = document.querySelector("#battle-section");
-  battleSection.addEventListener("click", (event) => {
-    if (event.target.attributes.class.value === "loot") {
+  const battleSection = document.querySelector('#battle-section');
+  battleSection.addEventListener('click', (event) => {
+    if (event.target.attributes.class.value === 'loot') {
       event.target.remove();
       updateGoldCounter(data);
     }
   });
 
-  panelButtons.addEventListener("click", (eventType) => {
+  panelButtons.addEventListener('click', (eventType) => {
     console.log(eventType.target);
   });
 
-  const nameChange = document.querySelector("#player-name");
-  const okayOrCancel = document.querySelector("#okay-cancel");
-  const modal = document.querySelector("#modal");
-  nameChange.addEventListener("click", () => {
-    modal.style.display = "block";
-    modal.style.transition = "display 5s";
+  const nameChange = document.querySelector('#player-name');
+  const okayOrCancel = document.querySelector('#okay-cancel');
+  const modal = document.querySelector('#modal');
+  nameChange.addEventListener('click', () => {
+    modal.style.display = 'block';
+    modal.style.transition = 'display 5s';
   });
 
-  okayOrCancel.addEventListener("click", (eventType) => {
-    if (eventType.target.id === "okay") {
-      const newName = document.querySelector("#name-input");
+  okayOrCancel.addEventListener('click', (eventType) => {
+    if (eventType.target.id === 'okay') {
+      const newName = document.querySelector('#name-input');
       if (newName.value.length >= 1) {
         data.playerName = newName.value;
         nameChange.textContent = newName.value;
       }
     }
-    modal.style.display = "none";
+    modal.style.display = 'none';
   });
 
   /*******************\
     |*** RIGHT COLUMN **|
     \*******************/
-  const fightRetreat = document.querySelector("#fight-retreat");
+  const fightRetreat = document.querySelector('#fight-retreat');
 
-  fightRetreat.addEventListener("change", (event) => {
+  fightRetreat.addEventListener('change', (event) => {
     data.fightRetreat = event.target.value;
     tick(data);
   });
 
-  const enemyBlock = document.querySelector("#enemies_container");
-  enemyBlock.addEventListener("click", (event) => {
-    const parentElement = event.target.closest(".enemy");
+  const enemyBlock = document.querySelector('#enemies_container');
+  enemyBlock.addEventListener('click', (event) => {
+    const parentElement = event.target.closest('.enemy');
     if (parentElement && parentElement.parentNode === enemyBlock) {
       enemyClick(data, parentElement);
     }

@@ -21,6 +21,8 @@ function updateLevelView(data) {
     const lvlCounter = document.querySelector('#curr-level');
     lvlCounter.innerText = formatNumber(data.lvl);
     playLevelUpAnimation();
+    unlockEnemy(data.lvl, data.enemies);
+    createEnemyScene(data);
   }
 }
 
@@ -57,9 +59,9 @@ function updateGoldCounter(data) {
  *   SLICE 2
  **************/
 
-function unlockProducers(producers, coffeeCount) {
-  producers.forEach((prod) => {
-    if (coffeeCount >= prod.price / 2) prod.unlocked = true;
+function unlockEnemy(currLevel, enemies) {
+  enemies.forEach((enemy) => {
+    if (currLevel >= enemy.unlockLevel) enemy.unlocked = true;
   });
 }
 
@@ -277,8 +279,9 @@ function createEnemyButtons(data) {
 function createEnemyScene(data) {
   const battleSection = document.querySelector('#battle-section');
   data.enemies.forEach((enemy) => {
+    const sceneExist = document.querySelector(`#${enemy.id}-container`);
     if (enemy.id === 'training') return;
-    else if (enemy.unlocked) {
+    else if (enemy.unlocked && sceneExist === null) {
       const div = document.createElement('div');
       div.setAttribute('id', `${enemy.id}-container`);
       div.className = 'battle-scene';

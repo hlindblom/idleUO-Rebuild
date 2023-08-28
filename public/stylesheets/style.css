@@ -320,7 +320,7 @@ input{
   grid: 2;
   align-self: center;
   text-align: center;
-  font-size: 2rem;
+  font-size: 2vw;
 }
 #panel-right {
   grid: 3;
@@ -363,6 +363,7 @@ input{
   background-image: url('../images/backgrounds/menu-background.png');
   background-size: cover;
   background-position: top;
+  padding-bottom: 10rem;
 }
 
 .row-divider {
